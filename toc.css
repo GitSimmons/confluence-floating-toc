@@ -43,6 +43,7 @@ the padding of nested list items.
 /* box-shadow instead of border-left because it doesn't affect
 spacing */
 .ts-toc-btf a {
+  display: block;
   color: #767676 !important;
   text-decoration: none;
 }
