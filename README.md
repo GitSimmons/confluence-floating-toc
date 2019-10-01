@@ -5,7 +5,9 @@ A simple JS + CSS approach to making the Confluence Table of Contents macro floa
 Playing with it is probably more valuable than a picture of it, so here's a working demo:
 https://codepen.io/SimmonsPen/pen/yLBwBLN
 
-Some quick attributions:
+## House Keeping
+
+### Attributions
 
 This project was inspired by Wade Tracy's implementation
 https://community.atlassian.com/t5/Boise/Widget-Wednesday-Floating-TOC-in-Confluence/
@@ -13,7 +15,72 @@ https://community.atlassian.com/t5/Boise/Widget-Wednesday-Floating-TOC-in-Conflu
 And by the Bootstrap's docs floating ToC
 https://getbootstrap.com/docs/3.3/css/
 
-To get this up and running on your own confluence server, you'll want to follow Wade's instructions, but use the following codeblock in the place of his css/js
+### Motivation
+
+Confluence's Table of Contents is pretty bare bones, and a friend wanted a more user-friendly version.
+
+## Instructions
+
+### Before we get started
+
+For clarity, this was made for Confluence Server 6.15.2, if it fails terribly on whatever your setup is, let me know.
+
+You'll need to enable Confluence's HTML macro to do this. Instructions for that are available at https://confluence.atlassian.com/doc/html-macro-38273085.html as well as a fairly well worded explanation as to why it's disabled by default. Please read that. Basically, if your userbase isn't only people you trust, maybe don't rely on this solution
+
+#### Step by Step
+
+Wade Tracy's instructions for getting this setup are excellent and easier to follow than anything I'd come up with, so lets follow along with his guidance:
+
+There are two pieces required for getting this to work. First you must add a Table of Contents macro with the correct settings and then you must add an HTML macro with the CSS and Javascript.
+
+##### Table of Contents Macro
+
+1. Divide the layout of your page so that there is an empty column on the right of the page where the menu will float.
+2. Add a _Table of Contents_ macro and set the heading levels to include all headings (h1-h6) (note that only the first three heading levels will be indented)
+3. Should you choose not have all headings in your ToC, you'll have to edit the Readable Code
+4. Search for the line
+
+````
+    const sections = document.querySelectorAll(
+    ".innerCell > h1, .innerCell > h2, .innerCell > h3, .innerCell > h4, .innerCell > h5, .innerCell > h6"
+  );
+  ```
+3. Delete the selectors for the headings that won't appear in your Table of Contents. ie. if you only wanted h2-h4 you'd use
+````
+
+      const sections = document.querySelectorAll(
+      ".innerCell > h2, .innerCell > h3, .innerCell > h4"
+    );
+    ```
+
+4. Pat yourself on the back for saving me time implementing a better solution
+5. Uncheck the box for _Printable_ and enter _ts-toc-btf_ as the _CSS Class Name_
+6. Save the page.
+
+##### HTML Macro
+
+1. Add an _HTML_ macro anywhere on the page (it isn't visible and it is easier to keep track of if you put it under the _Table of Contents_ macro):
+2. Copy the _Minified_ code below and paste it into the _HTML_ macro.
+3. Tweak style settings if desired–the _Readable_ code below can help identify what changes can be made.
+
+##### If it doesn't work
+
+Tell me.
+
+## Code
+
+### Minified
+
+```
+<style>
+.ts-toc-btf{position:relative;overflow-wrap:normal;font-size:13px;line-height:1.5}.ts-toc-btf p{font-weight:700}.ts-toc-btf>ul>li>span>a.active{font-weight:700}.ts-toc-btf ul{list-style:none;padding-left:0}.ts-toc-btf ul a{padding:4px 10px}.ts-toc-btf ul ul a{font-size:12px;padding:4px 20px}.ts-toc-btf ul ul ul a{padding:4px 30px}.ts-toc-btf a{color:#767676!important;text-decoration:none}.ts-toc-btf a:hover{color:#4a72c2!important;box-shadow:inset 2px 0 0 #4a72c2}.ts-toc-btf a.active{color:#0052cc!important;box-shadow:inset 2px 0 0 #0052cc}@media (max-width:900px){.ts-toc-btf{display:none}}
+</style>
+<script>
+document.addEventListener("DOMContentLoaded",function(){let a=document.getElementsByClassName("ts-toc-btf"),b=document.createElement("p");const c=document.createTextNode("On this page");b.appendChild(c),a[0].insertBefore(b,a[0].firstChild);const d=document.querySelectorAll(".innerCell > h1, .innerCell > h2, .innerCell > h3, .innerCell > h4, .innerCell > h5, .innerCell > h6"),e=document.querySelectorAll(".ts-toc-btf a");e.forEach(a=>a.textContent=a.textContent.trim());let f=d.length;const g=()=>{e.forEach(a=>{0!==a.parentElement.parentElement.getElementsByClassName("active").length&&a.classList.add("active")})},h=a=>{e[a].classList.add("active"),g()},i=a=>e[a].classList.remove("active"),j=()=>[...Array(d.length).keys()].forEach(a=>i(a)),k=b=>{window.removeEventListener("scroll",o),j(),h(b),a[0].style.position="fixed",a[0].style.top="0",setTimeout(()=>window.addEventListener("scroll",o),50)};e.forEach((a,b)=>{a.addEventListener("click",()=>k(b),!0)});let l=0;const m=a=>{a.style.position="fixed",a.style.top="0"},n=a=>{a.style.position="relative",a.style.top=""},o=()=>{const b=d.length-[...d].reverse().findIndex(a=>window.scrollY>=a.offsetTop-l)-1;b===d.length?(j(),f=b,n(a[0]),l=0):b!==f&&(j(),f=b,m(a[0]),h(b),l=0==b?0:100)};window.addEventListener("scroll",o)},!1);
+</script>
+```
+
+### Readable
 
 ```
 <style>
