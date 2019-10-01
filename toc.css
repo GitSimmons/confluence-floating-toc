@@ -1,0 +1,64 @@
+.ts-toc-btf {
+  position: relative;
+  overflow-wrap: normal;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* Only used for the "on this page text" */
+.ts-toc-btf p {
+  font-weight: bold;
+}
+
+/* Bold active top level links */
+.ts-toc-btf > ul > li > span > a.active {
+  font-weight: bold;
+}
+
+/* 
+padding-left controls the auto indentation of lists
+but, unfortunately, the left border that we're adding
+gets indented as well. The following css is to control
+the padding of nested list items.
+*/
+.ts-toc-btf ul {
+  list-style: none;
+  padding-left: 0px;
+}
+
+.ts-toc-btf ul a {
+  padding: 4px 10px;
+}
+
+.ts-toc-btf ul ul a {
+  font-size: 12px;
+  padding: 4px 20px;
+}
+
+.ts-toc-btf ul ul ul a {
+  padding: 4px 30px;
+}
+
+/* Colors */
+/* box-shadow instead of border-left because it doesn't affect
+spacing */
+.ts-toc-btf a {
+  color: #767676 !important;
+  text-decoration: none;
+}
+.ts-toc-btf a:hover {
+  color: #4a72c2 !important;
+  box-shadow: inset 2px 0px 0px #4a72c2;
+}
+
+.ts-toc-btf a.active {
+  color: #0052cc !important;
+  box-shadow: inset 2px 0px 0px #0052cc;
+}
+
+/* Don't show the toc on narrow windows */
+@media (max-width: 900px) {
+  .ts-toc-btf {
+    display: none;
+  }
+}
