@@ -86,10 +86,12 @@ document.addEventListener(
     const makeFixed = element => {
       element.style.position = "fixed";
       element.style.top = "0";
+      element.style.width = element.parentElement.offsetWidth + "px";
     };
     const makeRelative = element => {
       element.style.position = "relative";
       element.style.top = "";
+      element.style.maxWidth = "";
     };
 
     const makeActiveFromScroll = () => {
@@ -122,6 +124,10 @@ document.addEventListener(
     /* Usually, when you have a scroll listener, you want to throttle it. In this case,
     it introduced a bug where if you scrolled fast enough, during the throttled 100ms, the toc stayed 'position: fixed'*/
     window.addEventListener("scroll", makeActiveFromScroll);
+    window.addEventListener(
+      "resize",
+      () => (toc[0].style.width = toc[0].parentElement.offsetWidth + "px")
+    );
   },
   false
 );
