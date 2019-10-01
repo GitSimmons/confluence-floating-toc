@@ -80,7 +80,7 @@ Tell me.
 .ts-toc-btf{position:relative;overflow-wrap:normal;font-size:13px;line-height:1.5}.ts-toc-btf p{font-weight:700}.ts-toc-btf>ul>li>span>a.active{font-weight:700}.ts-toc-btf ul{list-style:none;padding-left:0}.ts-toc-btf ul a{padding:4px 10px}.ts-toc-btf ul ul a{font-size:12px;padding:4px 20px}.ts-toc-btf ul ul ul a{padding:4px 30px}.ts-toc-btf a{display:block;color:#767676!important;text-decoration:none}.ts-toc-btf a:hover{color:#4a72c2!important;box-shadow:inset 2px 0 0 #4a72c2}.ts-toc-btf a.active{color:#0052cc!important;box-shadow:inset 2px 0 0 #0052cc}@media (max-width:900px){.ts-toc-btf{display:none}}
 </style>
 <script>
-document.addEventListener("DOMContentLoaded",function(){let a=document.getElementsByClassName("ts-toc-btf"),b=document.createElement("p");const c=document.createTextNode("On this page");b.appendChild(c),a[0].insertBefore(b,a[0].firstChild);const d=document.querySelectorAll(".innerCell > h1, .innerCell > h2, .innerCell > h3, .innerCell > h4, .innerCell > h5, .innerCell > h6"),e=document.querySelectorAll(".ts-toc-btf a");e.forEach(a=>a.textContent=a.textContent.trim());let f=d.length;const g=()=>{e.forEach(a=>{0!==a.parentElement.parentElement.getElementsByClassName("active").length&&a.classList.add("active")})},h=a=>{e[a].classList.add("active"),g()},i=a=>e[a].classList.remove("active"),j=()=>[...Array(d.length).keys()].forEach(a=>i(a)),k=b=>{window.removeEventListener("scroll",o),j(),h(b),a[0].style.position="fixed",a[0].style.top="0",setTimeout(()=>window.addEventListener("scroll",o),50)};e.forEach((a,b)=>{a.addEventListener("click",()=>k(b),!0)});let l=0;const m=a=>{a.style.position="fixed",a.style.top="0"},n=a=>{a.style.position="relative",a.style.top=""},o=()=>{const b=d.length-[...d].reverse().findIndex(a=>window.scrollY>=a.offsetTop-l)-1;b===d.length?(j(),f=b,n(a[0]),l=0):b!==f&&(j(),f=b,m(a[0]),h(b),l=0==b?0:100)};window.addEventListener("scroll",o)},!1);
+document.addEventListener("DOMContentLoaded",function(){let a=document.getElementsByClassName("ts-toc-btf"),b=document.createElement("p");const c=document.createTextNode("On this page");b.appendChild(c),a[0].insertBefore(b,a[0].firstChild);const d=document.querySelectorAll(".innerCell > h1, .innerCell > h2, .innerCell > h3, .innerCell > h4, .innerCell > h5, .innerCell > h6"),e=document.querySelectorAll(".ts-toc-btf a");e.forEach(a=>a.textContent=a.textContent.trim());let f=d.length;const g=()=>{e.forEach(a=>{0!==a.parentElement.parentElement.getElementsByClassName("active").length&&a.classList.add("active")})},h=a=>{e[a].classList.add("active"),g()},i=a=>e[a].classList.remove("active"),j=()=>[...Array(d.length).keys()].forEach(a=>i(a)),k=b=>{window.removeEventListener("scroll",o),j(),h(b),a[0].style.position="fixed",a[0].style.top="0",setTimeout(()=>window.addEventListener("scroll",o),50)};e.forEach((a,b)=>{a.addEventListener("click",()=>k(b),!0)});let l=0;const m=a=>{a.style.position="fixed",a.style.top="0",a.style.width=a.parentElement.offsetWidth+"px"},n=a=>{a.style.position="relative",a.style.top="",a.style.maxWidth=""},o=()=>{const b=d.length-[...d].reverse().findIndex(a=>window.scrollY>=a.offsetTop-l)-1;b===d.length?(j(),f=b,n(a[0]),l=0):b!==f&&(j(),f=b,m(a[0]),h(b),l=0==b?0:100)};window.addEventListener("scroll",o),window.addEventListener("resize",()=>a[0].style.width=a[0].parentElement.offsetWidth+"px")},!1);
 </script>
 ```
 
@@ -243,10 +243,12 @@ document.addEventListener(
     const makeFixed = element => {
       element.style.position = "fixed";
       element.style.top = "0";
+      element.style.width = element.parentElement.offsetWidth + "px";
     };
     const makeRelative = element => {
       element.style.position = "relative";
       element.style.top = "";
+      element.style.maxWidth = "";
     };
 
     const makeActiveFromScroll = () => {
@@ -279,8 +281,13 @@ document.addEventListener(
     /* Usually, when you have a scroll listener, you want to throttle it. In this case,
     it introduced a bug where if you scrolled fast enough, during the throttled 100ms, the toc stayed 'position: fixed'*/
     window.addEventListener("scroll", makeActiveFromScroll);
+    window.addEventListener(
+      "resize",
+      () => (toc[0].style.width = toc[0].parentElement.offsetWidth + "px")
+    );
   },
   false
 );
+
 </script>
 ```
