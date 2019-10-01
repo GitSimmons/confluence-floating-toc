@@ -9,34 +9,34 @@ https://codepen.io/SimmonsPen/pen/yLBwBLN
 
 ### Attributions
 
-This project was inspired by Wade Tracy's implementation
+This project was inspired by **Wade Tracy**'s implementation
 https://community.atlassian.com/t5/Boise/Widget-Wednesday-Floating-TOC-in-Confluence/
 
-And by the Bootstrap's docs floating ToC
+And by **Bootstrap**'s docs floating ToC
 https://getbootstrap.com/docs/3.3/css/
 
 ### Motivation
 
-Confluence's Table of Contents is pretty bare bones, and a friend wanted a more user-friendly version.
+Confluence's Table of Contents Macro is pretty bare bones, and a friend wanted a more user-friendly version.
 
 ## Instructions
 
 ### Before we get started
 
-For clarity, this was made for Confluence Server 6.15.2, if it fails terribly on whatever your setup is, let me know.
+For clarity, this was made for **Confluence Server 6.15.2**, if it fails terribly on whatever your setup is, let me know.
 
-You'll need to enable Confluence's HTML macro to do this. Instructions for that are available at https://confluence.atlassian.com/doc/html-macro-38273085.html as well as a fairly well worded explanation as to why it's disabled by default. Please read that. Basically, if your userbase isn't only people you trust, maybe don't rely on this solution
+You'll need to enable Confluence's **HTML** macro to do this. Instructions for that are available at https://confluence.atlassian.com/doc/html-macro-38273085.html as well as a fairly well worded explanation as to why it's disabled by default. Please read that. Basically, if your userbase isn't exclusively people you trust, maybe don't rely on this solution.
 
-#### Step by Step
+### Step by Step
 
 Wade Tracy's instructions for getting this setup are excellent and easier to follow than anything I'd come up with, so lets follow along with his guidance:
 
 There are two pieces required for getting this to work. First you must add a Table of Contents macro with the correct settings and then you must add an HTML macro with the CSS and Javascript.
 
-##### Table of Contents Macro
+#### Table of Contents Macro
 
 1. Divide the layout of your page so that there is an empty column on the right of the page where the menu will float.
-2. Add a _Table of Contents_ macro and set the heading levels to include all headings (h1-h6) (note that only the first three heading levels will be indented)
+2. Add a **Table of Contents** macro and set the heading levels to include all headings (h1-h6) (note that only the first three heading levels will be indented)
 3. Should you choose not have all headings in your ToC, you'll have to edit the Readable Code
 4. Search for the line
 
@@ -54,16 +54,16 @@ There are two pieces required for getting this to work. First you must add a Tab
     ```
 
 4. Pat yourself on the back for saving me time implementing a better solution
-5. Uncheck the box for _Printable_ and enter _ts-toc-btf_ as the _CSS Class Name_
+5. Uncheck the box for **Printable** and enter **ts-toc-btf** as the **CSS Class Name**
 6. Save the page.
 
-##### HTML Macro
+#### HTML Macro
 
-1. Add an _HTML_ macro anywhere on the page (it isn't visible and it is easier to keep track of if you put it under the _Table of Contents_ macro):
-2. Copy the _Minified_ code below and paste it into the _HTML_ macro.
-3. Tweak style settings if desired–the _Readable_ code below can help identify what changes can be made.
+1. Add an **HTML** macro anywhere on the page (it isn't visible and it is easier to keep track of if you put it under the **Table of Contents** macro):
+2. Copy the **Minified** code below and paste it into the **HTML** macro.
+3. Tweak style settings if desired–the **Readable** code below can help identify what changes can be made.
 
-##### If it doesn't work
+#### If it doesn't work
 
 Tell me.
 
