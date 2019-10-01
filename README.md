@@ -38,24 +38,27 @@ There are two pieces required for getting this to work. First you must add a Tab
 1. Divide the layout of your page so that there is an empty column on the right of the page where the menu will float.
 2. Add a **Table of Contents** macro and set the heading levels to include all headings (h1-h6) (note that only the first three heading levels will be indented)
 3. Should you choose not have all headings in your ToC, you'll have to edit the Readable Code
-4. Search for the line
 
-````
-    const sections = document.querySelectorAll(
-    ".innerCell > h1, .innerCell > h2, .innerCell > h3, .innerCell > h4, .innerCell > h5, .innerCell > h6"
-  );
-  ```
-3. Delete the selectors for the headings that won't appear in your Table of Contents. ie. if you only wanted h2-h4 you'd use
-````
+   1. Search for the line
 
-      const sections = document.querySelectorAll(
-      ".innerCell > h2, .innerCell > h3, .innerCell > h4"
-    );
-    ```
+   ```
+   const sections = document.querySelectorAll(
+   ".innerCell > h1, .innerCell > h2, .innerCell > h3, .innerCell > h4, .innerCell > h5, .innerCell > h6"
+   );
+   ```
 
-4. Pat yourself on the back for saving me time implementing a better solution
-5. Uncheck the box for **Printable** and enter **ts-toc-btf** as the **CSS Class Name**
-6. Save the page.
+   2. Delete the selectors for the headings that won't appear in your Table of Contents. ie. if you only wanted h2-h4 you'd use
+
+   ```
+   const sections = document.querySelectorAll(
+   ".innerCell > h2, .innerCell > h3, .innerCell > h4"
+   );
+   ```
+
+   3. Pat yourself on the back for saving me time implementing a better solution
+
+4. Uncheck the box for **Printable** and enter **ts-toc-btf** as the **CSS Class Name**
+5. Save the page.
 
 #### HTML Macro
 
