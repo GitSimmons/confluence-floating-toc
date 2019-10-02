@@ -118,8 +118,6 @@ document.addEventListener("DOMContentLoaded",function(){let e=document.getElemen
 </script>
 ```
 
-```
-
 ### Readable
 
 ```
@@ -338,6 +336,8 @@ document.addEventListener(
 );
 
 </script>
+
+```
 
 ```
 
