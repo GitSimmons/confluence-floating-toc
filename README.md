@@ -6,7 +6,7 @@ Features include:
 
 - Multi Level Highlighting
 - Sticky-ish Positioning
-- Collapsable headings
+- Collapsable Headings
 
 Playing with it is probably more valuable than a picture of it, so here's a working demo:
 https://codepen.io/SimmonsPen/pen/yLBwBLN
@@ -23,19 +23,19 @@ https://getbootstrap.com/docs/3.3/css/
 
 ### Motivation
 
-Confluence's Table of Contents Macro is pretty bare bones, and a friend wanted a more user-friendly version with some neat features like multi level highlighting and sticky positioning.
+Confluence's Table of Contents Macro is pretty bare bones, I felt I could fix some of its shortcomings.
 
 ## Instructions
 
 ### Before we get started
 
-For clarity, this was made for **Confluence Server 6.15.2**, if it fails terribly on whatever your setup is, let me know.
+For clarity, this was made for **Confluence Server 6.15.2**, if it fails terribly on whatever your setup is, let me know. I'm not familiar with Confluence more generally, but maybe we can figure out what's broken together.
 
-You'll need to enable Confluence's **HTML** macro to do this. Instructions for that are available at https://confluence.atlassian.com/doc/html-macro-38273085.html as well as a fairly well worded explanation as to why it's disabled by default. Please read that. Basically, if your userbase isn't exclusively people you trust, maybe don't rely on this solution.
+You'll need to enable Confluence's **HTML** macro to do this. Instructions for that are available at https://confluence.atlassian.com/doc/html-macro-38273085.html as well as a succinct explanation as to why it's disabled by default. Please read that. Basically, if your userbase isn't exclusively people you trust, maybe don't rely on this solution.
 
 ### Step by Step
 
-Wade Tracy's instructions for getting this setup are excellent and easier to follow than anything I'd come up with, so lets follow along with his guidance:
+Wade Tracy's instructions for getting this setup are excellent and easier to follow than anything I'd come up with, so lets follow along with his guidance (and a couple small additions for things specific to this project):
 
 There are two pieces required for getting this to work. First you must add a Table of Contents macro with the correct settings and then you must add an HTML macro with the CSS and Javascript.
 
