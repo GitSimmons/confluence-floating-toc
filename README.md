@@ -2,10 +2,11 @@
 
 A no-frameworks JS + CSS approach to adding some quality of life features to the Confluence Table of Contents Macro
 
-Features included:
-Multi Level Highlighting
-Sticky-ish Positioning
-Collapsable headings
+Features include:
+
+- Multi Level Highlighting
+- Sticky-ish Positioning
+- Collapsable headings
 
 Playing with it is probably more valuable than a picture of it, so here's a working demo:
 https://codepen.io/SimmonsPen/pen/yLBwBLN
@@ -70,7 +71,8 @@ There are two pieces required for getting this to work. First you must add a Tab
 
 1. Add an **HTML** macro anywhere on the page (it isn't visible and it is easier to keep track of if you put it under the **Table of Contents** macro):
 2. Copy the **Minified** or **Readable** code below and paste it into the **HTML** macro.
-   1. If you want collapsing headings, search in the **Readable** code for
+   1. If you want collapsing headings,use the **Minified with Collapsing Headers** code, but if you need to make other changes to the **Readable** code,
+      you can enable it by searching for
       ```
         .ts-toc-btf ul ul ul a {
         /* uncomment the following line if you want the menu to collapse third level headings */
@@ -105,9 +107,23 @@ document.addEventListener("DOMContentLoaded",function(){let e=document.getElemen
 </script>
 ```
 
+### Minified with Collapsing Headers
+
+```
+<style>
+.ts-toc-btf{position:relative;overflow-wrap:normal;font-size:13px;line-height:1.5}.ts-toc-btf p{font-weight:700}.ts-toc-btf>ul>li>span>a.active{font-weight:700}.ts-toc-btf ul{list-style:none;padding-left:0}.ts-toc-btf ul a{padding:4px 10px}.ts-toc-btf ul ul a{font-size:12px;padding:4px 20px}.ts-toc-btf ul ul ul a{display:none;padding:4px 30px}.ts-toc-btf ul ul li.active a{display:block}.ts-toc-btf a{display:block;color:#767676!important;text-decoration:none}.ts-toc-btf a:hover{color:#4a72c2!important;box-shadow:inset 2px 0 0 #4a72c2}.ts-toc-btf a.active{color:#0052cc!important;box-shadow:inset 2px 0 0 #0052cc}@media (max-width:900px){.ts-toc-btf{display:none}}
+</style>
+<script>
+document.addEventListener("DOMContentLoaded",function(){let e=document.getElementsByClassName("ts-toc-btf"),t=document.createElement("p");const n=document.createTextNode("On this page");t.appendChild(n),e[0].insertBefore(t,e[0].firstChild);const s=document.querySelectorAll(".innerCell > h1, .innerCell > h2, .innerCell > h3, .innerCell > h4, .innerCell > h5, .innerCell > h6");console.log(s);const l=document.querySelectorAll(".ts-toc-btf a");l.forEach(e=>e.textContent=e.textContent.trim());let o=s.length;const i=e=>{l[e].classList.add("active"),l.forEach(e=>{const t=e.closest("li");0!==t.getElementsByClassName("active").length?(t.classList.add("active"),e.classList.add("active")):t.classList.remove("active")})},c=()=>[...Array(s.length).keys()].forEach(e=>{(e=>{l[e].classList.remove("active"),l[e].closest("li").classList.remove("active")})(e)}),r=e=>{e.style.position="fixed",e.style.top="0",e.style.width=e.parentElement.offsetWidth+"px"};l.forEach((t,n)=>{t.addEventListener("click",()=>(t=>{window.removeEventListener("scroll",a),c(),i(t),r(e[0]),setTimeout(()=>window.addEventListener("scroll",a),50)})(n),!0)});let d=0;const a=()=>{const t=s.length-[...s].reverse().findIndex(e=>window.scrollY>=e.offsetTop-d)-1;t===s.length?(c(),o=t,(e=>{e.style.position="relative",e.style.top="",e.style.maxWidth=""})(e[0]),d=0):t!==o&&(c(),o=t,r(e[0]),i(t),d=0===t?0:100)};window.addEventListener("scroll",a),window.addEventListener("resize",()=>e[0].style.width=e[0].parentElement.offsetWidth+"px")},!1);
+</script>
+```
+
+```
+
 ### Readable
 
 ```
+
 <style>
 .ts-toc-btf {
   position: relative;
@@ -322,4 +338,7 @@ document.addEventListener(
 );
 
 </script>
+
+```
+
 ```
