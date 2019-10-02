@@ -12,6 +12,7 @@ document.addEventListener(
     const sections = document.querySelectorAll(
       ".innerCell > h1, .innerCell > h2, .innerCell > h3, .innerCell > h4, .innerCell > h5, .innerCell > h6"
     );
+    console.log(sections);
     /* Get all ToC Links */
     const nav_links = document.querySelectorAll(".ts-toc-btf a");
     /* Get the text for the toc links and trim whitespace from beginning of links */
@@ -44,11 +45,12 @@ document.addEventListener(
        Because this is always called from makeActive, it should be possible to only grab the ancestors of the active element.
        For most ToCs though, the data is small enough that the performance difference won't matter. */
       nav_links.forEach(link => {
-        if (
-          link.parentElement.parentElement.getElementsByClassName("active")
-            .length !== 0
-        ) {
+        const parentListItem = link.closest("li");
+        if (parentListItem.getElementsByClassName("active").length !== 0) {
+          parentListItem.classList.add("active");
           link.classList.add("active");
+        } else {
+          parentListItem.classList.remove("active");
         }
       });
     };
@@ -56,11 +58,26 @@ document.addEventListener(
       nav_links[link].classList.add("active");
       highlightTopLevelHeadingsOfActiveHeading();
     };
-    const removeActive = link => nav_links[link].classList.remove("active");
+    const removeActive = link => {
+      nav_links[link].classList.remove("active");
+      nav_links[link].closest("li").classList.remove("active");
+    };
     const removeAllActive = () =>
       /* Could use nav_links.forEach(link, key) => removeActive(key), but you don't actually need the data, 
     so we'll create an empty array of the right length */
-      [...Array(sections.length).keys()].forEach(link => removeActive(link));
+      [...Array(sections.length).keys()].forEach(link => {
+        removeActive(link);
+      });
+    const makeFixed = element => {
+      element.style.position = "fixed";
+      element.style.top = "0";
+      element.style.width = element.parentElement.offsetWidth + "px";
+    };
+    const makeRelative = element => {
+      element.style.position = "relative";
+      element.style.top = "";
+      element.style.maxWidth = "";
+    };
 
     const handleClick = link => {
       /* When a user clicks a link, disable the scroll spy and then manually set active class so that the
@@ -68,8 +85,7 @@ document.addEventListener(
       window.removeEventListener("scroll", makeActiveFromScroll);
       removeAllActive();
       makeActive(link);
-      toc[0].style.position = "fixed";
-      toc[0].style.top = "0";
+      makeFixed(toc[0]);
       setTimeout(
         () => window.addEventListener("scroll", makeActiveFromScroll),
         50
@@ -82,17 +98,6 @@ document.addEventListener(
     it defaults to 0 until you hit the first heading, and then changes. If you'd like to adjust it, adjust it in
     makeActiveFromScroll */
     let sectionMargin = 0;
-
-    const makeFixed = element => {
-      element.style.position = "fixed";
-      element.style.top = "0";
-      element.style.width = element.parentElement.offsetWidth + "px";
-    };
-    const makeRelative = element => {
-      element.style.position = "relative";
-      element.style.top = "";
-      element.style.maxWidth = "";
-    };
 
     const makeActiveFromScroll = () => {
       // current index math from p1xt's blog, you can read about it here: https://medium.com/p1xts-blog/scrollspy-with-just-javascript-3131c114abdc

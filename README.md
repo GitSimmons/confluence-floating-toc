@@ -1,6 +1,11 @@
 # confluence-floating-toc
 
-A simple JS + CSS approach to making the Confluence Table of Contents macro float and highlight the currently active Heading
+A no-frameworks JS + CSS approach to adding some quality of life features to the Confluence Table of Contents Macro
+
+Features included:
+Multi Level Highlighting
+Sticky-ish Positioning
+Collapsable headings
 
 Playing with it is probably more valuable than a picture of it, so here's a working demo:
 https://codepen.io/SimmonsPen/pen/yLBwBLN
@@ -17,7 +22,7 @@ https://getbootstrap.com/docs/3.3/css/
 
 ### Motivation
 
-Confluence's Table of Contents Macro is pretty bare bones, and a friend wanted a more user-friendly version.
+Confluence's Table of Contents Macro is pretty bare bones, and a friend wanted a more user-friendly version with some neat features like multi level highlighting and sticky positioning.
 
 ## Instructions
 
@@ -38,7 +43,7 @@ There are two pieces required for getting this to work. First you must add a Tab
 1. Divide the layout of your page so that there is an empty column on the right of the page where the menu will float.
 2. Add a **Table of Contents** macro and set the heading levels to include all headings (h1-h6) (note that only the first three heading levels will be indented)
 
-   1. Should you choose not have all headings in your ToC, you'll have to edit the Readable Code
+   1. Should you choose not have all headings in your ToC, you'll have to edit the Readable Code before using it in the HTML Macro later.
 
    2. Search for the line
 
@@ -64,8 +69,24 @@ There are two pieces required for getting this to work. First you must add a Tab
 #### HTML Macro
 
 1. Add an **HTML** macro anywhere on the page (it isn't visible and it is easier to keep track of if you put it under the **Table of Contents** macro):
-2. Copy the **Minified** code below and paste it into the **HTML** macro.
-3. Tweak style settings if desired–the **Readable** code below can help identify what changes can be made.
+2. Copy the **Minified** or **Readable** code below and paste it into the **HTML** macro.
+   1. If you want collapsing headings, search in the **Readable** code for
+      ```
+        .ts-toc-btf ul ul ul a {
+        /* uncomment the following line if you want the menu to collapse third level headings */
+        /*   display: none; */
+        padding: 4px 30px;
+      }
+      ```
+3. Like the instructions suggest, simply remove the slash-asterisk style commenting around the `display: none;` line
+   ```
+     .ts-toc-btf ul ul ul a {
+     /* uncomment the following line if you want the menu to collapse third level headings */
+     display: none;
+     padding: 4px 30px;
+   }
+   ```
+4. Tweak style settings if desired–the **Readable** code below can help identify what changes can be made.
 
 #### If it doesn't work
 
@@ -77,10 +98,10 @@ Tell me.
 
 ```
 <style>
-.ts-toc-btf{position:relative;overflow-wrap:normal;font-size:13px;line-height:1.5}.ts-toc-btf p{font-weight:700}.ts-toc-btf>ul>li>span>a.active{font-weight:700}.ts-toc-btf ul{list-style:none;padding-left:0}.ts-toc-btf ul a{padding:4px 10px}.ts-toc-btf ul ul a{font-size:12px;padding:4px 20px}.ts-toc-btf ul ul ul a{padding:4px 30px}.ts-toc-btf a{display:block;color:#767676!important;text-decoration:none}.ts-toc-btf a:hover{color:#4a72c2!important;box-shadow:inset 2px 0 0 #4a72c2}.ts-toc-btf a.active{color:#0052cc!important;box-shadow:inset 2px 0 0 #0052cc}@media (max-width:900px){.ts-toc-btf{display:none}}
+.ts-toc-btf{position:relative;overflow-wrap:normal;font-size:13px;line-height:1.5}.ts-toc-btf p{font-weight:700}.ts-toc-btf>ul>li>span>a.active{font-weight:700}.ts-toc-btf ul{list-style:none;padding-left:0}.ts-toc-btf ul a{padding:4px 10px}.ts-toc-btf ul ul a{font-size:12px;padding:4px 20px}.ts-toc-btf ul ul ul a{padding:4px 30px}.ts-toc-btf ul ul li.active a{display:block}.ts-toc-btf a{display:block;color:#767676!important;text-decoration:none}.ts-toc-btf a:hover{color:#4a72c2!important;box-shadow:inset 2px 0 0 #4a72c2}.ts-toc-btf a.active{color:#0052cc!important;box-shadow:inset 2px 0 0 #0052cc}@media (max-width:900px){.ts-toc-btf{display:none}}
 </style>
 <script>
-document.addEventListener("DOMContentLoaded",function(){let a=document.getElementsByClassName("ts-toc-btf"),b=document.createElement("p");const c=document.createTextNode("On this page");b.appendChild(c),a[0].insertBefore(b,a[0].firstChild);const d=document.querySelectorAll(".innerCell > h1, .innerCell > h2, .innerCell > h3, .innerCell > h4, .innerCell > h5, .innerCell > h6"),e=document.querySelectorAll(".ts-toc-btf a");e.forEach(a=>a.textContent=a.textContent.trim());let f=d.length;const g=()=>{e.forEach(a=>{0!==a.parentElement.parentElement.getElementsByClassName("active").length&&a.classList.add("active")})},h=a=>{e[a].classList.add("active"),g()},i=a=>e[a].classList.remove("active"),j=()=>[...Array(d.length).keys()].forEach(a=>i(a)),k=b=>{window.removeEventListener("scroll",o),j(),h(b),a[0].style.position="fixed",a[0].style.top="0",setTimeout(()=>window.addEventListener("scroll",o),50)};e.forEach((a,b)=>{a.addEventListener("click",()=>k(b),!0)});let l=0;const m=a=>{a.style.position="fixed",a.style.top="0",a.style.width=a.parentElement.offsetWidth+"px"},n=a=>{a.style.position="relative",a.style.top="",a.style.maxWidth=""},o=()=>{const b=d.length-[...d].reverse().findIndex(a=>window.scrollY>=a.offsetTop-l)-1;b===d.length?(j(),f=b,n(a[0]),l=0):b!==f&&(j(),f=b,m(a[0]),h(b),l=0==b?0:100)};window.addEventListener("scroll",o),window.addEventListener("resize",()=>a[0].style.width=a[0].parentElement.offsetWidth+"px")},!1);
+document.addEventListener("DOMContentLoaded",function(){let e=document.getElementsByClassName("ts-toc-btf"),t=document.createElement("p");const n=document.createTextNode("On this page");t.appendChild(n),e[0].insertBefore(t,e[0].firstChild);const s=document.querySelectorAll(".innerCell > h1, .innerCell > h2, .innerCell > h3, .innerCell > h4, .innerCell > h5, .innerCell > h6");console.log(s);const l=document.querySelectorAll(".ts-toc-btf a");l.forEach(e=>e.textContent=e.textContent.trim());let o=s.length;const i=e=>{l[e].classList.add("active"),l.forEach(e=>{const t=e.closest("li");0!==t.getElementsByClassName("active").length?(t.classList.add("active"),e.classList.add("active")):t.classList.remove("active")})},c=()=>[...Array(s.length).keys()].forEach(e=>{(e=>{l[e].classList.remove("active"),l[e].closest("li").classList.remove("active")})(e)}),r=e=>{e.style.position="fixed",e.style.top="0",e.style.width=e.parentElement.offsetWidth+"px"};l.forEach((t,n)=>{t.addEventListener("click",()=>(t=>{window.removeEventListener("scroll",a),c(),i(t),r(e[0]),setTimeout(()=>window.addEventListener("scroll",a),50)})(n),!0)});let d=0;const a=()=>{const t=s.length-[...s].reverse().findIndex(e=>window.scrollY>=e.offsetTop-d)-1;t===s.length?(c(),o=t,(e=>{e.style.position="relative",e.style.top="",e.style.maxWidth=""})(e[0]),d=0):t!==o&&(c(),o=t,r(e[0]),i(t),d=0===t?0:100)};window.addEventListener("scroll",a),window.addEventListener("resize",()=>e[0].style.width=e[0].parentElement.offsetWidth+"px")},!1);
 </script>
 ```
 
@@ -126,7 +147,12 @@ the padding of nested list items.
 }
 
 .ts-toc-btf ul ul ul a {
+  /* uncomment the following line if you want the menu to collapse third level headings */
+  /*   display: none; */
   padding: 4px 30px;
+}
+.ts-toc-btf ul ul li.active a {
+  display: block;
 }
 
 /* Colors */
@@ -153,6 +179,7 @@ spacing */
     display: none;
   }
 }
+
 </style>
 <script>
 document.addEventListener(
@@ -169,6 +196,7 @@ document.addEventListener(
     const sections = document.querySelectorAll(
       ".innerCell > h1, .innerCell > h2, .innerCell > h3, .innerCell > h4, .innerCell > h5, .innerCell > h6"
     );
+    console.log(sections);
     /* Get all ToC Links */
     const nav_links = document.querySelectorAll(".ts-toc-btf a");
     /* Get the text for the toc links and trim whitespace from beginning of links */
@@ -201,11 +229,12 @@ document.addEventListener(
        Because this is always called from makeActive, it should be possible to only grab the ancestors of the active element.
        For most ToCs though, the data is small enough that the performance difference won't matter. */
       nav_links.forEach(link => {
-        if (
-          link.parentElement.parentElement.getElementsByClassName("active")
-            .length !== 0
-        ) {
+        const parentListItem = link.closest("li");
+        if (parentListItem.getElementsByClassName("active").length !== 0) {
+          parentListItem.classList.add("active");
           link.classList.add("active");
+        } else {
+          parentListItem.classList.remove("active");
         }
       });
     };
@@ -213,11 +242,26 @@ document.addEventListener(
       nav_links[link].classList.add("active");
       highlightTopLevelHeadingsOfActiveHeading();
     };
-    const removeActive = link => nav_links[link].classList.remove("active");
+    const removeActive = link => {
+      nav_links[link].classList.remove("active");
+      nav_links[link].closest("li").classList.remove("active");
+    };
     const removeAllActive = () =>
       /* Could use nav_links.forEach(link, key) => removeActive(key), but you don't actually need the data,
     so we'll create an empty array of the right length */
-      [...Array(sections.length).keys()].forEach(link => removeActive(link));
+      [...Array(sections.length).keys()].forEach(link => {
+        removeActive(link);
+      });
+    const makeFixed = element => {
+      element.style.position = "fixed";
+      element.style.top = "0";
+      element.style.width = element.parentElement.offsetWidth + "px";
+    };
+    const makeRelative = element => {
+      element.style.position = "relative";
+      element.style.top = "";
+      element.style.maxWidth = "";
+    };
 
     const handleClick = link => {
       /* When a user clicks a link, disable the scroll spy and then manually set active class so that the
@@ -225,8 +269,7 @@ document.addEventListener(
       window.removeEventListener("scroll", makeActiveFromScroll);
       removeAllActive();
       makeActive(link);
-      toc[0].style.position = "fixed";
-      toc[0].style.top = "0";
+      makeFixed(toc[0]);
       setTimeout(
         () => window.addEventListener("scroll", makeActiveFromScroll),
         50
@@ -239,17 +282,6 @@ document.addEventListener(
     it defaults to 0 until you hit the first heading, and then changes. If you'd like to adjust it, adjust it in
     makeActiveFromScroll */
     let sectionMargin = 0;
-
-    const makeFixed = element => {
-      element.style.position = "fixed";
-      element.style.top = "0";
-      element.style.width = element.parentElement.offsetWidth + "px";
-    };
-    const makeRelative = element => {
-      element.style.position = "relative";
-      element.style.top = "";
-      element.style.maxWidth = "";
-    };
 
     const makeActiveFromScroll = () => {
       // current index math from p1xt's blog, you can read about it here: https://medium.com/p1xts-blog/scrollspy-with-just-javascript-3131c114abdc

@@ -36,7 +36,12 @@ the padding of nested list items.
 }
 
 .ts-toc-btf ul ul ul a {
+  /* uncomment the following line if you want the menu to collapse third level headings */
+  /*   display: none; */
   padding: 4px 30px;
+}
+.ts-toc-btf ul ul li.active a {
+  display: block;
 }
 
 /* Colors */
