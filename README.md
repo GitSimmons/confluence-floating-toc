@@ -78,7 +78,7 @@ There are two pieces required for getting this to work. First you must add a Tab
         padding: 4px 30px;
       }
       ```
-3. Like the instructions suggest, simply remove the slash-asterisk style commenting around the `display: none;` line
+   2. Like the instructions suggest, simply remove the slash-asterisk style commenting around the `display: none;` line
    ```
      .ts-toc-btf ul ul ul a {
      /* uncomment the following line if you want the menu to collapse third level headings */
@@ -86,7 +86,7 @@ There are two pieces required for getting this to work. First you must add a Tab
      padding: 4px 30px;
    }
    ```
-4. Tweak style settings if desired–the **Readable** code below can help identify what changes can be made.
+3. Tweak style settings if desired–the **Readable** code below can help identify what changes can be made.
 
 #### If it doesn't work
 
