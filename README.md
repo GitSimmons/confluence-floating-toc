@@ -11,7 +11,7 @@ Features include:
 Playing with it is probably more valuable than a picture of it, so here's a working demo:
 https://codepen.io/SimmonsPen/pen/yLBwBLN
 
-## House Keeping
+## Housekeeping
 
 ### Attributions
 
