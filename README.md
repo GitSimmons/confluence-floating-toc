@@ -23,7 +23,7 @@ https://getbootstrap.com/docs/3.3/css/
 
 ### Motivation
 
-Confluence's Table of Contents Macro is pretty bare bones, I felt I could fix some of its shortcomings.
+Confluence's Table of Contents Macro is pretty bare bones; I felt I could fix some of its shortcomings.
 
 ## Instructions
 
